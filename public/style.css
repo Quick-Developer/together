@@ -1,0 +1,46 @@
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+     
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #floating-panel {
+        
+        position: absolute;
+        top: 10px;
+        left: 0%;
+        height: 20;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      /* position: relative;
+      background: #fff;
+      border-radius: 2px;
+      box-sizing: border-box;
+      width: 392px;
+      height: 48px;
+      border-bottom: 1px solid transparent;
+      padding: 12px 104px 11px 64px;
+      transition-property: background,box-shadow;
+      transition-duration: 0.3s;
+  } */
+    #map-canvas {
+      margin: 0;
+      padding: 0;      
+      height: 100%;
+      max-width: none;
+    }
+    #map-canvas img {
+      max-width: none !important;
+    }
