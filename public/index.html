@@ -2,30 +2,33 @@
 <html>
 
 <head>
-  <title>Geocoding service</title>
+  <title>Together activties </title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+  <link rel="stylesheet" type="text/css" href="main/style.css">
 </head>
 
 <body>
-  
   <div id="map-canvas">
-    
-    
+
   </div>
   <div id="floating-panel">
-      <input id="address" type="textbox" value="Sydney, NSW">
-      <input id="submit" type="button" value="Geocode">
-      <button onclick="searchAddress();">Search</button>
-    </div>
-  
-  
-  <script type="module" src="main.js"></script>
-  <script 
-  type="text/javascript" 
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXkL50KRp0tMsdH2OjfQJqybqzP1yUky8">
-  </script> 
+    <input id="activity-search" type="search" placeholder="search an activity">
+    <button id="search-button">Search</button>
+  </div>
+
+  <!-- <script src="jquery/dist/jquery.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
+  <script type="module" src="main/main.js"></script>
+  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc_ZPpAaLuPC3My03ZuZ2NBWThEPPxOj8&libraries=geometry,places&language=en&callback=initMap"></script> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXkL50KRp0tMsdH2OjfQJqybqzP1yUky8&language=en">
+  </script>
 </body>
 <!-- 
   

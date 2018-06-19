@@ -1,8 +1,7 @@
 //include mongoose in file
 var mongoose = require('mongoose');
 
-//Connecting to the MongoDB Database
-mongoose.connect('mongodb://localhost/activityDB');
+
 
 
 //the schema constructor function
@@ -14,10 +13,9 @@ let userSchema = new mongoose.Schema({
     password: String
 });
 
-
 let locationSchema = new mongoose.Schema({
-    lng: Number,
-    lat: Number
+    lat: Number,
+    lng: Number
 });
 
 let activitySchema = new mongoose.Schema({

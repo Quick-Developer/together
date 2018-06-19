@@ -1,143 +1,75 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/spacebookDB', function () {
-//   console.log("DB connection established!!!");
-// })
-const SERVER_PORT = 8000;
-
 var Activity = require('./models/togetherModel');
 
-var firstActivity = new Activity ({
-  creator: "yehuda",
-  members: ['ron', 'avi'],
-  category: 'football',
-  subject:  'play',
-  updated: '12/10/1990',
-  location: {
-    lng: 66,
-    lat: 456
-  } 
-});
-
-var secendActivity = new Activity ({
-  creator: "yehuda",
-  members: ['ron', 'avi'],
-  category: 'football',
-  subject:  'play',
-  updated: '12/10/1990',
-  location: {
-    lng: 66,
-    lat: 456
-  } 
-});
-
-var thirdActivity = new Activity ({
-  creator: "yehuda",
-  members: ['ron', 'avi'],
-  category: 'chess',
-  subject:  'play',
-  updated: '12/10/1990',
-  location: {
-    lng: 66,
-    lat: 456
-  } 
-});
-
-var fourthActivity = new Activity ({
-  creator: "yehuda",
-  members: ['ron', 'avi'],
-  category: 'chess',
-  subject:  'training', 
-  updated: '12/10/1990',
-  location: {
-    lng: 66,
-    lat: 456
-  } 
-});
-
-/*
-
-Book.create({
-  numberOfPages: 22,
-  author: {
-    name: "Joe",
-    height: 156
-  }
-}, function(err, data) {
-  if (err) {
-    return console.error(err)
-  }
-  console.log(data)
+//Connecting to the MongoDB Database
+mongoose.connect('mongodb://localhost/activityDB' , function () {
+    console.log("DB connection established!!!");
 })
 
-
-aPost.save(function(err, data) {
-  if (err) {
-    console.error(err);
-  } else {
-    console.error(data);
-  }
-});
-
-
-Person.findOneAndUpdate({ age: 25 }, { firstName: 'Paul' }, function(err, person) {
-  if (err) throw err;
-  else console.log(person);
-});
-aPost.save(function(err, data){...})*/
-
-
-
-firstActivity.save();
-secendActivity.save();
-thirdActivity.save();
-fourthActivity.save();
-
-
 var app = express();
-app.use(express.static('public'));
-app.use(express.static('node_modules'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-// You will need to create 5 server routes
 // These will define your API:
 
-// 1) to handle getting all posts and their comments
-/* app.get('/loadAllPosts', (request, response) => {
-  Post.find({}).populate('text, comments').exec(function (error, posts) {
+// to handle getting all activities and their location
+app.get('/loadAllActivities', (request, response) => {
+  Activity.find({}, function (error, activities) {
     if (error) {
-      return console.error(error);
+      response.send(error); 
+      console.error(error);
     } else {
-      response.send(posts);
+      response.send(activities);
     }
   });
 });
 
-// 2) to handle adding a post
-app.post('/addPost', (request, response) => {
-  let postObj = new Post({
-    text: request.body.text,
-    comments: []
+// to handle add a activity
+app.post('/addActivity', (request, response) => {
+  let activityObj = new Activiti({
+    text: request.body,
   })
- postObj.save();
-  response.send(postObj);
+  activityObj.save();
+  response.send(activityObj);
 });
 
-// 3) to handle deleting a post
-app.delete('/deletePost/:postId', (request, response) => {
-  let postId = request.params.postId;
-  Post.findByIdAndRemove(postId, (err, removedPost) => {
+// to handle deleting a activity
+app.delete('/deleteActivity/:activityId', (request, response) => {
+  let activityId = request.params.activityId;
+  Post.findByIdAndRemove(activityId, (err, removedActivityId) => {
     if (err) {
       console.log(err);
     } else {
-      response.send(removedPost);
+      response.send(removedActivityId);
     }
   });
 });
-// 4) to handle adding a comment to a post
+// to handle deleting a activity by category
+app.get('/findActivity/:category', (request, response) => {
+  let myCategory = request.params.category;
+  Activity.find({
+    category: myCategory,
+  }).exec(function (error, activities) {
+    if (error) {
+      return console.error(error);
+    } else {
+      response.send(activities);
+    }
+  });
+});
+
+app.use(express.static('public'));
+app.use(express.static('node_modules'));
+//Connecting to the local server
+const SERVER_PORT = 8000;
+app.listen(SERVER_PORT, () => {
+  console.log("Server started on port " + SERVER_PORT);
+});
+
+
+/*// 4) to handle adding a comment to a post
 app.post('/post/:postId/AddComment', (request, response) => {  
   let postId = request.params.postId;
   Post.findByIdAndUpdate(postId, { $push: { comments: request.body } }, { new: true }, (err, updatedPost) => {
@@ -162,9 +94,104 @@ app.delete('/post/:postId/deleteComment/:commentId', (request, response) => {
   });
 }); */
 
-  app.listen(SERVER_PORT, () => {
-    console.log("Server started on port " + SERVER_PORT);
+/*=====================================================
+Create activities Collection in Db
+=======================================================*/
+function createActivInDB()
+{
+  var firstActivity = new Activity ({
+    creator: "yehuda",
+    members: ['ron', 'avi'],
+    category: 'football',
+    subject:  'play',
+    updated: '12/10/1990',
+    location: {
+      lat: 51.508742,
+      lng : -0.120850
+    } 
   });
+  
+  var secendActivity = new Activity ({
+    creator: "yehuda",
+    members: ['ron', 'avi'],
+    category: 'football',
+    subject:  'play',
+    updated: '12/10/1990',
+    location: {
+      lat: 51.519942, 
+      lng: -0.510850
+    } 
+  });
+  
+  var thirdActivity = new Activity ({
+    creator: "yehuda",
+    members: ['ron', 'avi'],
+    category: 'chess',
+    subject:  'play',
+    updated: '12/10/1990',
+    location: {
+      lat: 51.525042, 
+      lng: -0.920850
+    } 
+  });
+  
+  var fourthActivity = new Activity ({
+    creator: "yehuda",
+    members: ['ron', 'avi'],
+    category: 'chess',
+    subject:  'training', 
+    updated: '12/10/1990',
+    location: {
+      lat: 51.497642,
+      lng: 0.120850
+    } 
+  }); 
+  firstActivity.save(function(err, data) {
+    if (err) {
+      console.error(err);
+    } else {
+      //console.error(data);
+    }
+  });
+  secendActivity.save(function(err, data) {
+    if (err) {
+      console.error(err);
+    } else {
+      //console.error(data);
+    }
+  });
+  thirdActivity.save(function(err, data) {
+    if (err) {
+      console.error(err);
+    } else {
+      //console.error(data);
+    }
+  });
+  fourthActivity.save(function(err, data) {
+    if (err) {
+      console.error(err);
+    } else {
+      //console.error(data);
+    }
+  });
+}
+/*Activity.create({
+  numberOfPages: 22,
+  author: {
+    name: "Joe",
+    height: 156
+  }
+}, function(err, data) {
+  if (err) {
+    return console.error(err)
+  }
+  console.log(data)
+})*/
+
+//createActivInDB();
+
+
+  
 
 
 
